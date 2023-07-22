@@ -3,12 +3,13 @@
 #include <random>
 #include <algorithm>
 #include <iostream>
-enum State{MENU,VISIBLE,BLIND};
+enum State{MENU,VISIBLE,BLIND,LOST,WON};
 enum Difficulty{NONE,EASY,MEDIUM,HARD};
 class board{
     private:
         int size;
         int **grid;
+        int next_number,goal;
         Vector2 spacing,sizing;
     public:
         int score;

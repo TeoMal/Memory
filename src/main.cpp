@@ -53,11 +53,25 @@ int main(void)
                     }
                 }    
             }
-            else{
+            else if(cur_state==VISIBLE || cur_state==BLIND){
                 //Game State
                 b->draw(cur_state);
                 if(cur_state==MENU){
                     delete b;
+                }
+            }
+            else if(cur_state==WON){
+                //Won State
+                GuiButton({300,200,300,100},"You Won!");
+                if(GuiButton({300,350,300,100},"Play Again")){
+                    cur_state=MENU;
+                }
+            }
+            else if(cur_state==LOST){
+                //Lost State
+                GuiButton({300,200,300,100},"You Lost!");
+                if(GuiButton({300,350,300,100},"Play Again")){
+                    cur_state=MENU;
                 }
             }
 

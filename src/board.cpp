@@ -4,6 +4,7 @@ board::board(int size){
         this->size=size;
         this->score=0;
         grid=new int*[size];
+        this->next_number=1;
         for(int i=0;i<size;i++){
             grid[i]=new int[size];
             for(int j=0;j<size;j++){
@@ -34,6 +35,7 @@ board::~board(void){
 
 void board::shuffle(int n){
     int total_elements = size * size;
+    this->goal=n;
     int* all_numbers = new int[total_elements];
     for (int i = 0; i < total_elements; ++i) {
         all_numbers[i] = i + 1;
@@ -61,12 +63,31 @@ void board::draw(State &cur_state){
     Vector2 offset={100,100};
     for(int i=0;i<size;i++){
         for(int j=0;j<size;j++){
-            if(grid[i][j]!=0 && cur_state==VISIBLE){
-                GuiButton({offset.x+i*(spacing.x+sizing.x),offset.y+j*(spacing.y+sizing.y),sizing.x,sizing.y},std::to_string(grid[i][j]).c_str());
+            if(cur_state==VISIBLE){
+                if(grid[i][j]!=0){
+                    GuiButton({offset.x+i*(spacing.x+sizing.x),offset.y+j*(spacing.y+sizing.y),sizing.x,sizing.y},std::to_string(grid[i][j]).c_str());
+                }
+                else{
+                    GuiButton({offset.x+i*(spacing.x+sizing.x),offset.y+j*(spacing.y+sizing.y),sizing.x,sizing.y},"");  
+                }
             }
-            else{
-                GuiButton({offset.x+i*(spacing.x+sizing.x),offset.y+j*(spacing.y+sizing.y),sizing.x,sizing.y},"");
+            else if(cur_state==BLIND){
+                if(GuiButton({offset.x+i*(spacing.x+sizing.x),offset.y+j*(spacing.y+sizing.y),sizing.x,sizing.y},"")){
+                    if(grid[i][j]==next_number){
+                        if(next_number==goal){
+                            cur_state=WON;
+                            return;
+                        }
+                        next_number++;
+                        grid[i][j]=0;
+                    }    
+                    else{
+                        cur_state=LOST;
+                        return;
+                    }
+                }
             }
+            
         }
     }
     GuiButton({50,10,200,75},TextFormat("Score: %i",score));

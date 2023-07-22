@@ -3,7 +3,7 @@
 #include <random>
 #include <algorithm>
 #include <iostream>
-enum State{MENU,GAME};
+enum State{MENU,VISIBLE,BLIND};
 enum Difficulty{NONE,EASY,MEDIUM,HARD};
 class board{
     private:
@@ -15,5 +15,5 @@ class board{
         board(int);
         ~board(void);
         void shuffle(int);
-        State draw(void);
+        void draw(State &);
 };

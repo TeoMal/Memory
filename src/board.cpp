@@ -57,11 +57,11 @@ void board::shuffle(int n){
     delete[] all_numbers;
 }
 
-State board::draw(void){
+void board::draw(State &cur_state){
     Vector2 offset={100,100};
     for(int i=0;i<size;i++){
         for(int j=0;j<size;j++){
-            if(grid[i][j]!=0){
+            if(grid[i][j]!=0 && cur_state==VISIBLE){
                 GuiButton({offset.x+i*(spacing.x+sizing.x),offset.y+j*(spacing.y+sizing.y),sizing.x,sizing.y},std::to_string(grid[i][j]).c_str());
             }
             else{
@@ -69,10 +69,12 @@ State board::draw(void){
             }
         }
     }
+    GuiButton({50,10,200,75},TextFormat("Score: %i",score));
+    if(GuiButton({400,10,100,75},"Ready")){
+        cur_state= BLIND;
+    }
     if(GuiButton({750,10,100,75},"Menu")){
-        return MENU;
+        cur_state = MENU;
     }
-    else{
-        return GAME;
-    }
+   
 }

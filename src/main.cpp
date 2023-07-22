@@ -33,7 +33,7 @@ int main(void)
                 //Menu State
                 cur_diff=DrawMenu();
                 if(cur_diff!=NONE){
-                    cur_state=GAME;
+                    cur_state=VISIBLE;
                     switch (cur_diff)
                     {
                     case EASY:
@@ -55,14 +55,11 @@ int main(void)
             }
             else{
                 //Game State
-                cur_state=b->draw();
+                b->draw(cur_state);
                 if(cur_state==MENU){
                     delete b;
                 }
             }
-
-            
-            
 
         EndDrawing();
         //----------------------------------------------------------------------------------

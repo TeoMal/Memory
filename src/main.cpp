@@ -11,16 +11,21 @@ int main(void)
     const int screenWidth = 900;
     const int screenHeight = 500;
     InitWindow(screenWidth, screenHeight, "Memory Game");
+    InitAudioDevice();
     Texture2D background=LoadTexture("assets/background.png");
     State cur_state=MENU;
     Difficulty cur_diff=NONE;
     board *b;
+    Sound wrong=LoadSound("assets/fail.mp3");
+    Music background_s = LoadMusicStream("assets/background.mp3");
+    SetMusicVolume(background_s, 0.3f);
+    PlayMusicStream(background_s);
     GuiLoadStyleJungle();
     GuiSetStyle(DEFAULT, TEXT_SIZE, 30);
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // Update
+        UpdateMusicStream(background_s);
         
 
         // Draw
@@ -70,6 +75,7 @@ int main(void)
             else if(cur_state==LOST){
                 //Lost State
                 GuiButton({300,200,300,100},"You Lost!");
+                PlaySound(wrong);
                 if(GuiButton({300,350,300,100},"Play Again")){
                     cur_state=MENU;
                 }

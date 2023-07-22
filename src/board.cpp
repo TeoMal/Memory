@@ -3,13 +3,11 @@
 board::board(int size){
         this->size=size;
         this->score=0;
+        this->correct=LoadSound("assets/correct.mp3");
         grid=new int*[size];
         this->next_number=1;
         for(int i=0;i<size;i++){
             grid[i]=new int[size];
-            for(int j=0;j<size;j++){
-                grid[i][j]=0;
-            }
         }
         switch(this->size){
             case 3:
@@ -52,6 +50,9 @@ void board::shuffle(int n){
             if(all_numbers[i * size + j]<=n){
                 grid[i][j] = all_numbers[i * size + j];
             }
+            else{
+                grid[i][j]=0;
+            }
         }
     }
 
@@ -74,8 +75,16 @@ void board::draw(State &cur_state){
             else if(cur_state==BLIND){
                 if(GuiButton({offset.x+i*(spacing.x+sizing.x),offset.y+j*(spacing.y+sizing.y),sizing.x,sizing.y},"")){
                     if(grid[i][j]==next_number){
+                        PlaySound(correct);
                         if(next_number==goal){
-                            cur_state=WON;
+                            if(goal==size*size){
+                                cur_state=WON;
+                                return;
+                            }
+                            cur_state=VISIBLE;
+                            this->shuffle(goal+1);
+                            next_number=1;
+                            score++;
                             return;
                         }
                         next_number++;

@@ -16,7 +16,6 @@ int main(void)
     State cur_state=MENU;
     Difficulty cur_diff=NONE;
     board *b;
-    Sound wrong=LoadSound("assets/fail.mp3");
     Music background_s = LoadMusicStream("assets/background.mp3");
     SetMusicVolume(background_s, 0.3f);
     PlayMusicStream(background_s);
@@ -34,6 +33,10 @@ int main(void)
 
             ClearBackground({255, 255, 255, 255});
             DrawTexture(background, 0, 0, WHITE);
+            if(GuiButton({ 750, 425, 100, 50 }, "Exit")){
+                EndDrawing();
+                break;
+            }
             if(cur_state==MENU){
                 //Menu State
                 cur_diff=DrawMenu();
@@ -67,16 +70,15 @@ int main(void)
             }
             else if(cur_state==WON){
                 //Won State
-                GuiButton({300,200,300,100},"You Won!");
-                if(GuiButton({300,350,300,100},"Play Again")){
+                GuiButton({300,100,300,100},"You Won!");
+                if(GuiButton({300,250,300,100},"Play Again")){
                     cur_state=MENU;
                 }
             }
             else if(cur_state==LOST){
                 //Lost State
-                GuiButton({300,200,300,100},"You Lost!");
-                PlaySound(wrong);
-                if(GuiButton({300,350,300,100},"Play Again")){
+                GuiButton({300,100,300,100},"You Lost!");
+                if(GuiButton({300,250,300,100},"Play Again")){
                     cur_state=MENU;
                 }
             }

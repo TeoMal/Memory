@@ -11,7 +11,7 @@ class board{
         int **grid;
         int next_number,goal;
         Vector2 spacing,sizing;
-        Sound correct;
+        Sound correct,wrong;
     public:
         int score;
         board(int);

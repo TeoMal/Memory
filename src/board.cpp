@@ -4,6 +4,7 @@ board::board(int size){
         this->size=size;
         this->score=0;
         this->correct=LoadSound("assets/correct.mp3");
+        this->wrong=LoadSound("assets/fail.mp3");
         grid=new int*[size];
         this->next_number=1;
         for(int i=0;i<size;i++){
@@ -91,6 +92,7 @@ void board::draw(State &cur_state){
                         grid[i][j]=0;
                     }    
                     else{
+                        PlaySound(wrong);
                         cur_state=LOST;
                         return;
                     }

@@ -1,6 +1,7 @@
 
 #define RAYGUI_IMPLEMENTATION
 #include "./board.hpp"
+#include <ctime>
 #include "../include/raygui.h"
 #include "../styles/jungle/jungle.h"
 Difficulty DrawMenu(void);
@@ -13,10 +14,13 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "Memory Game");
     InitAudioDevice();
     Texture2D background=LoadTexture("assets/background.png");
+    Texture2D logo=LoadTexture("assets/logo.png");
     State cur_state=MENU;
     Difficulty cur_diff=NONE;
     board *b;
+    float time;
     Music background_s = LoadMusicStream("assets/background.mp3");
+
     SetMusicVolume(background_s, 0.3f);
     PlayMusicStream(background_s);
     GuiLoadStyleJungle();
@@ -39,6 +43,7 @@ int main(void)
             }
             if(cur_state==MENU){
                 //Menu State
+                DrawTexture(logo,325,0,WHITE);
                 cur_diff=DrawMenu();
                 if(cur_diff!=NONE){
                     cur_state=VISIBLE;
@@ -47,14 +52,17 @@ int main(void)
                     case EASY:
                         b=new board(3);
                         b->shuffle(3);
+                        time=0;
                         break;
                     case MEDIUM:
                         b=new board(4);
                         b->shuffle(4);
+                        time=0;
                         break;
                     case HARD:
                         b=new board(5);
                         b->shuffle(5);
+                        time=0;
                         break;
                     default:
                         break;
@@ -63,6 +71,8 @@ int main(void)
             }
             else if(cur_state==VISIBLE || cur_state==BLIND){
                 //Game State
+                time+=GetFrameTime();
+                GuiButton({400,425,100,50},TextFormat("%2d:%2d",(int)time/60,(int)time%60));
                 b->draw(cur_state);
                 if(cur_state==MENU){
                     delete b;
@@ -70,7 +80,7 @@ int main(void)
             }
             else if(cur_state==WON){
                 //Won State
-                GuiButton({300,100,300,100},"You Won!");
+                GuiButton({300,100,300,100},TextFormat("You Won!\nTime:%d:%d",(int)time/60,(int)time%60));
                 if(GuiButton({300,250,300,100},"Play Again")){
                     cur_state=MENU;
                 }
@@ -93,15 +103,15 @@ int main(void)
 }
 
 Difficulty DrawMenu(void){
-    if(GuiButton({ 300, 25, 300, 120 }, "Easy")){
+    if(GuiButton({ 300, 125, 300, 100 }, "Easy")){
 
         return EASY;
     }
-    else if(GuiButton({ 300, 170, 300, 120 }, "Medium")){
+    else if(GuiButton({ 300, 250, 300, 100 }, "Medium")){
 
         return MEDIUM;
     }
-    else if(GuiButton({ 300, 315, 300, 120 }, "Hard")){
+    else if(GuiButton({ 300, 375,300, 100 }, "Hard")){
     
         return HARD;
     }

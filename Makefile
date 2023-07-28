@@ -32,5 +32,8 @@ $(EXEC):$(OBJS)
 
 PHONY clean:
 	rm -f $(BUILD)/*.o $(BUILD)/*.opp $(EXEC)
+
+PHONY clear:
+	rm -f $(BUILD)/*.o $(BUILD)/*.opp $(EXEC)
 run: $(EXEC)
 	./$(EXEC)

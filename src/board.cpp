@@ -65,39 +65,37 @@ void board::draw(State &cur_state){
     Vector2 offset={100,100};
     for(int i=0;i<size;i++){
         for(int j=0;j<size;j++){
-            if(cur_state==VISIBLE){
-                if(grid[i][j]!=0){
+            if(grid[i][j]!=0){
+                if(cur_state==VISIBLE){
                     GuiButton({offset.x+i*(spacing.x+sizing.x),offset.y+j*(spacing.y+sizing.y),sizing.x,sizing.y},std::to_string(grid[i][j]).c_str());
                 }
-                else{
-                    GuiButton({offset.x+i*(spacing.x+sizing.x),offset.y+j*(spacing.y+sizing.y),sizing.x,sizing.y},"");  
-                }
-            }
-            else if(cur_state==BLIND){
-                if(GuiButton({offset.x+i*(spacing.x+sizing.x),offset.y+j*(spacing.y+sizing.y),sizing.x,sizing.y},"")){
-                    if(grid[i][j]==next_number){
-                        PlaySound(correct);
-                        if(next_number==goal){
-                            if(goal==size*size){
-                                cur_state=WON;
+                else if(cur_state==BLIND){
+                    if(GuiButton({offset.x+i*(spacing.x+sizing.x),offset.y+j*(spacing.y+sizing.y),sizing.x,sizing.y},"")){
+                        if(grid[i][j]==next_number){
+                            PlaySound(correct);
+                            if(next_number==goal){
+                                if(goal==size*size){
+                                    cur_state=WON;
+                                    return;
+                                }
+                                cur_state=VISIBLE;
+                                this->shuffle(goal+1);
+                                next_number=1;
+                                score++;
                                 return;
                             }
-                            cur_state=VISIBLE;
-                            this->shuffle(goal+1);
-                            next_number=1;
-                            score++;
+                            next_number++;
+                            grid[i][j]=0;
+                        }    
+                        else{
+                            PlaySound(wrong);
+                            cur_state=LOST;
                             return;
                         }
-                        next_number++;
-                        grid[i][j]=0;
-                    }    
-                    else{
-                        PlaySound(wrong);
-                        cur_state=LOST;
-                        return;
                     }
                 }
             }
+            
             
         }
     }

@@ -88,7 +88,7 @@ int main(void)
             }
             else if(cur_state==LOST){
                 //Lost State
-                GuiButton({300,100,300,100},"You Lost!");
+                GuiButton({300,100,300,100},TextFormat("You Lost!Score:%d\nTime:%d:%d",b->score,(int)time/60,(int)time%60));
                 if(GuiButton({300,250,300,100},"Play Again")){
                     time=0;
                     cur_state=MENU;

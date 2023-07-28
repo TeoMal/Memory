@@ -82,6 +82,7 @@ int main(void)
                 //Won State
                 GuiButton({300,100,300,100},TextFormat("You Won!\nTime:%d:%d",(int)time/60,(int)time%60));
                 if(GuiButton({300,250,300,100},"Play Again")){
+                    time=0;
                     cur_state=MENU;
                 }
             }
@@ -89,6 +90,7 @@ int main(void)
                 //Lost State
                 GuiButton({300,100,300,100},"You Lost!");
                 if(GuiButton({300,250,300,100},"Play Again")){
+                    time=0;
                     cur_state=MENU;
                 }
             }

@@ -6,8 +6,11 @@
 
 ## How to run
 `!!warning!!: The game can only be run on Linux.`
+
 `make run` to run the game instantly.
+
 `make clear/clean` to clear the files created by the game.
+
 `make` to compile the game.
 
 ## How to play

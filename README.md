@@ -2,7 +2,7 @@
 "Memory" is a game that tests how quickly and how many numbers you can remember written in C++ with graphics using the raylib library and a jungle theme.
 
 ## Prerequisites
-'''sudo apt install libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev'''
+'sudo apt install libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev'
 
 ## How to run
 '!!warning!!: The game can only be run on Linux.'

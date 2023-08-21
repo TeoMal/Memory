@@ -3,6 +3,7 @@
 
 ## Prerequisites
 `sudo apt install libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev`
+`sudo apt install build-essential`
 
 ## How to run
 `!!warning!!: The game can only be run on Linux.`
